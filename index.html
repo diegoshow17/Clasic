@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> Clásicos Barcelona vs Real Madrid</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(90deg, #004d98, #a50044);
+      color: white;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav li {
+      position: relative;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 15px;
+      display: inline-block;
+      transition: background 0.3s ease;
+      border-radius: 5px;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: rgba(255,255,255,0.2);
+    }
+
+    nav li ul {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #a50044;
+      min-width: 160px;
+      display: none;
+      flex-direction: column;
+      border-radius: 0 0 5px 5px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      z-index: 1000;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    nav li:hover > ul,
+    nav li:focus-within > ul {
+      display: flex;
+    }
+
+    nav li ul li a {
+      padding: 8px 12px;
+      background: #a50044;
+    }
+
+    nav li ul li a:hover {
+      background: #7a0030;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+      fill: white;
+      margin-right: 5px;
+    }
+
+    .banner {
+      background: linear-gradient(90deg, #a50044, #004d98);
+      color: white;
+      text-align: center;
+      padding: 25px 20px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
+      border-radius: 0 0 10px 10px;
+    }
+    .banner p {
+      font-weight: 400;
+      font-size: 1rem;
+      margin-top: 8px;
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    h1, h2, h3, h4 {
+      margin-bottom: 15px;
+      color: #004d98;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    th {
+      background: #004d98;
+      color: white;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .gallery img {
+      max-width: 150px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .gallery img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      z-index: 5;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 400px;
+      margin: auto;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea {
+      padding: 8px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+    }
+    button {
+      background: #004d98;
+      color: white;
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #003366;
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        width: 100%;
+      }
+      nav li ul {
+        position: relative;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .gallery img {
+        max-width: 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav aria-label="Menú principal">
+    <ul>
+      <li><a href="#inicio"><svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Inicio</a></li>
+      <li tabindex="0">
+        <a href="#resultados" aria-haspopup="true" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>Resultados
+        </a>
+        <ul aria-label="Submenú resultados">
+          <li><a href="#clasico2024">2024</a></li>
+          <li><a href="#clasico2025">2025</a></li>
+          <li><a href="#clasico2025">2025</a></li>
+        </ul>
+      </li>
+      <li><a href="#contacto"><svg class="icon" viewBox="0 0 24 24"><path d="M21 8V7l-3 2-2-2-3 3v1l4 4-5 5h-3v-3l5-5-4-4v-1l3-3 3 2 3-2z"/></svg>Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="banner" role="banner" aria-label="Banner principal">
+  <h2>¡Vive la emoción del Clásico Barcelona vs Real Madrid!</h2>
+  <p>Consulta los últimos resultados, goleadores y mucho más en nuestro sitio.</p>
+</section>
+
+<main>
+  <section id="inicio" tabindex="0">
+    <h1>Bienvenidos a los Clásicos Barcelona vs Real Madrid</h1>
+    <p>Este sitio recopila los ultimos tres resultados de los enfrentamientos entre FC Barcelona y Real Madrid, mostrando goleadores, asistencias, alineaciones, y más.</p>
+    <div class="gallery" aria-label="Galería de imágenes de clásicos">
+      <img src="https://images.daznservices.com/di/library/DAZN_News/b8/37/fc-barcelona-la-liga_1jxdxq19a7z4i1mdvawqvnk2js.jpg?t=-2107146871" alt="Escudo FC Barcelona" />
+      <img src="https://estaticos-cdn.prensaiberica.es/clip/c8717efc-31eb-48fb-b01b-bdd1a43dfde1_alta-libre-aspect-ratio_default_0.jpg" alt="Escudo Real Madrid" />
+      <img src="https://phantom-marca.unidadeditorial.es/3b1340ee463df927631386c4a16975c1/resize/828/f/jpg/assets/multimedia/imagenes/2020/10/24/16035235037442.jpg" alt="Foto clásico" />
+    </div>
+  </section>
+
+  <section id="resultados" tabindex="0">
+    <h2>Resultados Destacados</h2>
+
+    <article id="clasico2010">
+      <h3>Clásico 12 Enero 2024</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>Resultado</th>
+            <th>Goleadores</th>
+            <th>Asistencias</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Barcelona</td>
+            <td>5</td>
+            <td>Lamine Yamal(1), Raphinha (2), Robert Lewandowski (1), Alejandro Balde (1)</td>
+            <td>Raphinha(1), Marc Casado(1), Robert Lewandowski(1), Jules Kounde(1)</td>
+          </tr>
+          <tr>
+            <td>Real Madrid</td>
+            <td>2</td>
+            <td>Kylian Mbappe(1), Rodrygo(1)</td>
+            <td>Vinicius(1)</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Alineaciones</h4>
+      <p><strong>Barcelona:</strong> Szczesny, Iñigo, Cubarsi, Balde, Kounde, Gavi, Pedri, Casado, Lewandowski, Raphinha y Yamal.</p>
+      <p><strong>Real Madrid:</strong> Courtois, Rüdiger, Tchouaméni, Mendy, Vasquez, Bellingham, Camavinga, Valverde, Mbappe, Rodrygo y Vinicius.</p>
+    </article>
+
+    <article id="clasico2025">
+      <h3>Clásico 26 Abril 2025</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>Resultado</th>
+            <th>Goleadores</th>
+            <th>Asistencias</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Barcelona</td>
+            <td>3</td>
+            <td>Pedri(1), Ferran(1), Kounde(1)</td>
+            <td>Yamal(1)</td>
+          </tr>
+          <tr>
+            <td>Real Madrid</td>
+            <td>2</td>
+            <td>Mbappe(1), Tchouameni(1)</td>
+            <td>Guler(1)</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Alineaciones</h4>
+      <p><strong>Barcelona:</strong> Szczesny, Iñigo, Cubarsi, Martin, Kounde, Olmo, Pedri, De Jong, Ferran, Raphinha y Yamal.</p>
+      <p><strong>Real Madrid:</strong> Courtois, Rüdiger, Tchouaméni, Mendy, Vasquez, Bellingham, Asencio, Valverde, Ceballos, Rodrygo y Vinicius.</p>
+    </article>
+
+    <article id="clasico2025">
+      <h3>Clásico 11 Mayo 2025</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>Resultado</th>
+            <th>Goleadores</th>
+            <th>Asistencias</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Barcelona</td>
+            <td>4</td>
+            <td>Eric Garcia(1), Yamal(1), Raphinha(2)</td>
+            <td>Ferran Torres(3), Pedri(1)</td>
+          </tr>
+          <tr>
+            <td>Real Madrid</td>
+            <td>3</td>
+            <td>Mbappe(3)</td>
+            <td>Vinicius(2)</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Alineaciones</h4>
+      <p><strong>Barcelona:</strong> Szczesny, Iñigo, Cubarsi, Martin, Eric Garcia, Olmo, Pedri, De Jong, Ferran, Raphinha y Yamal.</p>
+      <p><strong>Real Madrid:</strong> Courtois, Mbappe, Tchouaméni, Garcia, Vasquez, Bellingham, Asencio, Valverde, Ceballos, Guler y Vinicius.</p>
+    </article>
+    
+  </section>
+
+  <section id="contacto" tabindex="0">
+    <h2>Contacto</h2>
+    <p>¿Quieres enviarnos comentarios o sugerencias? Completa el formulario:</p>
+    <form onsubmit="alert('Gracias por contactarnos. Respuesta enviada!'); return false;">
+      <label for="nombre">Nombre:</label>
+      <input id="nombre" name="nombre" type="text" required />
+
+      <label for="email">Correo electrónico:</label>
+      <input id="email" name="email" type="email" required />
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+</main>
+<footer style="text-align:center; padding: 15px; background:#004d98; color:white;">
+    &copy; 2024/25 Clásicos Barcelona vs Real Madrid | 
+  </footer>
+  
+</body>
+</html>
